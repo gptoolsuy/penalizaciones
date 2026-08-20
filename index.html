@@ -275,7 +275,7 @@
 
         <div>
           <label for="meta">Meta (días)</label>
-          <input id="meta" type="number" min="0" step="any" value="5">
+          <input id="meta" type="number" min="0" step="1" value="5">
           <div class="help">Meta establecida en días</div>
         </div>
 
@@ -384,8 +384,8 @@ function calcular() {
   const anio = Number(document.getElementById('anio').value);
   const error = document.getElementById('error');
 
-  if (![plazo, meta, cco, anio].every(Number.isFinite) || meta <= 0 || plazo < 0 || cco < 0 || !UBT[anio]) {
-    error.textContent = 'Revisá los datos ingresados. La meta debe ser mayor que cero.';
+  if (![plazo, meta, cco, anio].every(Number.isFinite) || meta <= 0 || !Number.isInteger(meta) || plazo < 0 || cco < 0 || !UBT[anio]) {
+    error.textContent = 'Revisá los datos ingresados. La meta debe ser un número entero mayor que cero.';
     error.style.display = 'block';
     return;
   }
@@ -431,6 +431,13 @@ document.querySelectorAll('input,select').forEach(el => {
     if (e.key === 'Enter') calcular();
   });
 });
+
+document.getElementById('meta').addEventListener('keydown', e => {
+  if (['.', ',', 'e', 'E', '+', '-'].includes(e.key)) {
+    e.preventDefault();
+  }
+});
+
 calcular();
 </script>
 </body>
