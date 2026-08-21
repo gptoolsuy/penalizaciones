@@ -287,10 +287,7 @@
 
         <div>
           <label for="anio">Año</label>
-          <select id="anio">
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-          </select>
+          <select id="anio"></select>
           <div class="help">Año de la UBT a aplicar</div>
         </div>
       </div>
@@ -368,6 +365,21 @@ const UBT = {
   2025: 916.84,
   2026: 953.51
 };
+
+const selectorAnio = document.getElementById('anio');
+
+Object.keys(UBT)
+  .sort((a, b) => Number(a) - Number(b))
+  .forEach(anio => {
+    const opcion = document.createElement('option');
+    opcion.value = anio;
+    opcion.textContent = anio;
+    selectorAnio.appendChild(opcion);
+  });
+
+if (UBT[2025]) {
+  selectorAnio.value = '2025';
+}
 
 const nf2 = new Intl.NumberFormat('es-UY', {
   minimumFractionDigits: 2,
